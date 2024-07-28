@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style/inf-profile-style.css">
+    <script>
+        function doPrev(fileCtrl,imgPrev)
+        {
+            let [file] = fileCtrl.files
+            if (file) {
+                imgPrev.src = URL.createObjectURL(file)
+            }
+        }
+    </script>
+    <script src="script/inf-profile-script.js"></script>
+</head>
+<body>
+    <div id="head">
+        <a class="navbar-brand" href="/"><img src="Images/Designer__6_-removebg-preview.png" alt="" style="width: 50px;height :50px; border-radius: 50%;" ></a>
+        Profile
+    </div>
+    <br>
+    <input type="hidden" id="hdn">
+    <form method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-6">
+                <label for="inputEmail4" class="form-label">Email</label>
+                <div class="row">
+                    <div class="col-md-8">
+                        <input type="email" name="email" class="form-control field" id="inputEmail4">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                Profile Picture <br><input name="ppic" type="file" name="" id="pp" onchange="doPrev(this,prev)">
+            </div>
+            <div class="col-md-3">
+                <img src="" alt="" srcset="" id="prev" style=" width: 80px; height: 70px;">
+            </div>
+        </div>
+
+
+
+        <br>
+        <div class="row">
+            <div class="col-md-5">
+                <label for="inputName" class="form-label">Full Name</label>
+                <input name="iname" type="text" class="form-control field" id="inputName">  
+            </div>
+            <div class="col-md-3">
+                <label for="inputDate" class="form-label">Date of Birth</label>
+                <input name="dob" type="date" class="form-control field" id="inputDate">
+            </div>
+            <div class="col-md-3">
+                <label for="inputGender" class="form-label">Gender</label>
+                <select name="gender" id="inputGender" class="form-select field">
+                    <option selected>Choose...</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Prefer not to say</option>
+                </select>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="inputAddress" class="form-label">Address</label>
+                <input name="address" type="text" class="form-control field" id="inputAddress" placeholder="1234 Main St">
+            </div>
+            <div class="col-md-3">
+                <label for="inputCity" class="form-label">City</label>
+                <select name="city" id="inputCity" class="form-select field">
+                    <option selected>Choose...</option>
+                    <option>Bathinda</option>
+                    <option>Ludhiana</option>
+                    <option>Chandigarh</option>
+                    <option>Mohali</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="inputContact" class="form-label">Contact</label>
+                <input name="contact" type="text" class="form-control field" id="inputContact">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-4">
+                <label for="inputWork" class="form-label">Field of Work</label>
+                <select name="field" class="form-select field" size="3" id="inputWork" multiple>
+                    <!-- <option selected>Choose...</option> -->
+                    <option value="Music">Music</option>
+                    <option value="Vlogging">Vlogging</option>
+                    <option value="Fitness">Fitness</option>
+                    <option value="Other">Other</option>
+                  </select>
+            </div>
+            <div class="col-md-2">
+                <label for="inputInsta" class="form-label">Instagram Handle</label>
+                <div class="input-group">
+                    <span class="input-group-text field" id="basic-addon1">@</span>
+                    <input name="insta" type="text" class="form-control field" id="inputInsta" aria-describedby="basic-addon1">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <label for="inputYt" class="form-label">Youtube Channel</label>
+                <input name="yt" type="text" class="form-control field" id="inputYt">
+            </div>
+            <div class="col-md-2">
+                <label for="inputFb" class="form-label">Facebook Handle</label>
+                <div class="input-group">
+                    <span class="input-group-text field" id="basic-addon2">@</span>
+                    <input name="fb" type="text" class="form-control field" id="inputFb" aria-describedby="basic-addon2">
+                </div>
+            </div>
+        </div>
+        <br>
+        <!-- <div class="row">
+            <div class="col-md-6">
+            <div class="input-group">
+                <span class="input-group-text field">Other Info</span>
+                <textarea class="form-control field" aria-label="With textarea"></textarea>
+            </div>
+            </div>
+        </div> -->
+        <br><br>
+        <div>
+            <button id="save" type="submit" class="btn btn-warning" style="background-color: rgb(19, 24, 66); color: white; border-color: rgb(19, 24, 66);;" formaction="/inf-profile-save-process" disabled>Save</button>
+            <button id="update" type="submit" class="btn btn-warning" style="background-color: rgb(19, 24, 66); color: white; border-color: rgb(19, 24, 66);;" formaction="/inf-profile-update-process" disabled>Update</button>
+        </div>
+    </form>
+</body>
+</html>

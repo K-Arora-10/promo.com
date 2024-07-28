@@ -1,0 +1,15 @@
+body{
+    background-color: rgb(236, 206, 174);
+    margin-top: 100px;
+}
+
+.btn{
+    background-color:rgb(19, 24, 66);
+    border-color:rgb(19, 24, 66);
+    color: white;
+}
+
+.tbl{
+    background-color: rgb(251, 246, 226);
+    column-width: 30px;
+}

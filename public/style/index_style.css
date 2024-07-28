@@ -1,0 +1,25 @@
+body{
+    padding:10px 20px 0px 20px;
+    background-color: rgb(236, 206, 174);
+}
+.mybutton{
+    background-color: rgb(230, 131, 105);
+    border-color: rgb(230, 131, 105);
+}
+/* .mybutton:hover{
+    background-color: rgb(19, 24, 66);
+    border-color: rgb(19, 24, 66);
+} */
+/* .field{
+    border-color: black;
+} */
+.head{
+    width: inherit;
+    height: 30px;
+    color: white;
+    background-color: rgb(19, 24, 66);
+    /* padding: 10px; */
+    border-radius: 5px;
+    
+}
+

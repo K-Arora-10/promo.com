@@ -1,0 +1,28 @@
+body{
+    padding:20px;
+    color: rgb(19, 24, 66);
+    /* font-size: 15px; */
+    background-color: rgb(236, 206, 174);
+}
+
+.btn{
+    background-color:rgb(19, 24, 66);
+    border-color:rgb(19, 24, 66);
+}
+.cardtxt{
+    color: rgb(19, 24, 66);
+}
+
+#head{
+    width: inherit;
+    height: 60px;
+    color: white;
+    background-color: rgb(19, 24, 66);
+    padding: 10px;
+    border-radius: 5px;
+    
+}
+
+#okay{
+    display: none;
+}

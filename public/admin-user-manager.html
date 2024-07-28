@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Manager</title>
+    <link rel="stylesheet" href="style/admin-user-manager.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
+    <script>
+        var module=angular.module("myModule",[])
+        var controller=module.controller("myController",function($scope,$http){
+
+            $scope.jsonArrayAll;
+            $scope.showAll=function()
+            {
+                let url="/fetch-all";
+                    $http.get(url).then(function(response)
+                    {
+                        // alert(JSON.stringify(response.data)) ;
+                        $scope.jsonArrayAll=response.data;
+
+                    },function(err)
+                    {
+                        alert(err)
+                    });
+            }
+
+            //-------------------------------------------------------------------------------------
+
+            $scope.doBlock=function(email)
+            {
+                let url="/do-block?email="+email;
+                $http.get(url).then(function(response)
+                    {
+                        //alert(response.data);
+                        $scope.showAll();
+
+                    },function(err)
+                    {
+                        alert(err)
+                    });
+            }
+
+            //------------------------------------------------------------------------------------------
+
+            $scope.doUnblock=function(email)
+            {
+                let url="/do-unblock?email="+email;
+                $http.get(url).then(function(response)
+                    {
+                        //alert(response.data);
+                        $scope.showAll();
+
+                    },function(err)
+                    {
+                        alert(err)
+                    });
+            }
+
+            //------------------------------------------------------------------------------------------
+
+            $scope.doUnblock=function(email)
+            {
+                let url="/do-unblock?email="+email;
+                $http.get(url).then(function(response)
+                    {
+                        //alert(response.data);
+                        $scope.showAll();
+
+                    },function(err)
+                    {
+                        alert(err)
+                    });
+            }
+
+            //------------------------------------------------------------------------------------------
+
+            $scope.doDelete=function(email)
+            {
+                let url="/do-delete?email="+email;
+                $http.get(url).then(function(response)
+                    {
+                        //alert(response.data);
+                        $scope.showAll();
+
+                    },function(err)
+                    {
+                        alert(err)
+                    });
+            }
+            
+        })
+    </script>
+</head>
+<body ng-app="myModule" ng-controller="myController" ng-init="showAll();">
+    <center>
+        <table width="900px" rules="all" border="solid" bgcolor="#fbf6e2" style="text-align: center;">
+            <tr>
+                <th>Sr. No.</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>User Type</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+            <tr ng-repeat="obj in jsonArrayAll">
+                <td>{{$index+1}}</td>
+                <td>{{obj.email}}</td>
+                <td>{{obj.pwd}}</td>
+                <td>{{obj.utype}}</td>
+                <td>{{obj.status}}</td>
+                <td>
+                    <button type="button" class="btn btn-primary" ng-click="doBlock(obj.email);">Block</button>
+                    <button type="button" class="btn btn-primary" ng-click="doUnblock(obj.email);">Resume</button>
+                    <button type="button" class="btn btn-primary" ng-click="doDelete(obj.email);">Delete</button>
+                </td>
+            </tr>
+        </table>
+    </center>
+</body>
+</html>

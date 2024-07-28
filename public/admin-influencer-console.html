@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Influencer Console</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
+    <link rel="stylesheet" href="style/admin-influencer-console.css">
+    <script>
+        var module=angular.module("myModule",[]);
+        var controller=module.controller("myController",function($scope,$http){
+
+            let jsonAryAll;
+
+            $scope.showAll=function()
+            {
+                let url="/show-inf-profile-data";
+                $http.get(url).then(function(response)
+                    {
+                       $scope.jsonAryAll=response.data;
+                    },function(err)
+                    {
+                        alert(err)
+                    });
+            }
+        })
+    </script>
+</head>
+<body ng-app="myModule" ng-controller="myController" ng-init="showAll();">
+    <center>
+        <table width="1200px" rules="all" border="solid" bgcolor="#fbf6e2" style="text-align: center;">
+            <tr>
+                <th>Sr. No.</th>
+                <th>Email</th>
+                <th>Full Name</th>
+                <th>DOB</th>
+                <th>Gender</th>
+                <th>Adress</th>
+                <th>City</th>
+                <th>Contact</th>
+                <th>Fields</th>
+                <th>Instagram</th>
+                <th>Youtube</th>
+                <th>Facebook</th>
+            </tr>
+            <tr ng-repeat="obj in jsonAryAll">
+                <td>{{$index+1}}</td>
+                <td>{{obj.email}}</td>
+                <td>{{obj.iname}}</td>
+                <td>{{obj.dob}}</td>
+                <td>{{obj.gender}}</td>
+                <td>{{obj.address}}</td>
+                <td>{{obj.city}}</td>
+                <td>{{obj.contact}}</td>
+                <td>{{obj.field}}</td>
+                <td>{{obj.insta}}</td>
+                <td>{{obj.fb}}</td>
+                <td>{{obj.yt}}</td>
+            </tr>
+        </table>
+    </center>
+</body>
+</html>
