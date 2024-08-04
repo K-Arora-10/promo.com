@@ -22,7 +22,7 @@ $(document).ready(function(){
             // $("#pp").val();
             else{
                 $("#inputName").val(jsonAry[0].iname);
-            $("#inputDate").val(jsonAry[0].dob);
+            $("#inputDate").val((jsonAry[0].dob).split("T")[0]);
             $("#inputGender").val(jsonAry[0].gender);
             $("#inputAddress").val(jsonAry[0].address);
             $("#inputCity").val(jsonAry[0].city);
@@ -33,7 +33,9 @@ $(document).ready(function(){
             $("#inputFb").val(jsonAry[0].fb);
             $("#inputYt").val(jsonAry[0].yt);
             $("#update").prop("disabled",false);
-            $("#prev").prop("src","uploads/"+jsonAry[0].ppic);
+            $("#prev").prop("src",jsonAry[0].ppic);
+            $("#hdn").val(jsonAry[0].ppic);
+            // alert($("#hdn").val());
             }
 
             

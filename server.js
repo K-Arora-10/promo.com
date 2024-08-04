@@ -3,7 +3,7 @@ let app=express();
 let mysql2=require("mysql2");
 var nodemailer = require("nodemailer");
 var fileuploader=require("express-fileupload");
-
+var cloudinary=require("cloudinary").v2;
 
 app.use(express.static("public"));
 app.use(fileuploader());
@@ -24,15 +24,17 @@ app.get("/",function(req,resp){
 
 //============================================================
 
-let config={
-    host:"b3esjb7kwpmuz6ekf5yj-mysql.services.clever-cloud.com",
-    user:"uomk722jncwih3pa",
-    password:"vjswLqVO8TnxCnes63ty",
-    database:"b3esjb7kwpmuz6ekf5yj",
-    dateStrings:true,
-    keepAliveDelay : 10000,
-    enableKeepAlive : true, 
-}
+// let config={
+//     host:"b3esjb7kwpmuz6ekf5yj-mysql.services.clever-cloud.com",
+//     user:"uomk722jncwih3pa",
+//     password:"vjswLqVO8TnxCnes63ty",
+//     database:"b3esjb7kwpmuz6ekf5yj",
+//     dateStrings:true,
+//     keepAliveDelay : 10000,
+//     enableKeepAlive : true, 
+// }
+
+let config="mysql://avnadmin:AVNS_PUn4TXZhqF44Q-Wlf3U@mysql-80077d7-promo.e.aivencloud.com:13584/defaultdb?";
 
 var mysql=mysql2.createConnection(config);
 
@@ -44,7 +46,31 @@ mysql.connect(function(err){
 })
 
 
-//=============================================================
+//===========================================================================================================================================
+// (async function() {
+
+//     // Configuration
+    cloudinary.config({ 
+        cloud_name: 'dyd43mrhr', 
+        api_key: '413241915622815', 
+        api_secret: '3_WzQawe6b98jUKSQgLwyoUBXJk' // Click 'View Credentials' below to copy your API secret
+    });
+    
+//     // Upload an image
+//      const uploadResult = await cloudinary.uploader
+//        .upload(
+//            '',
+               
+//        )
+//        .catch((error) => {
+//            console.log(error);
+//        });
+    
+//     console.log("Done");
+// })
+//=====================================================================================================================================
+
+
 
 app.get("/send-to-database",function(req,resp){
     let txtEmail=req.query.txtEmail;
@@ -119,7 +145,7 @@ app.get("/inf-profile",function(req,resp){
 
 //===========================================================================================================
 
-app.post("/inf-profile-save-process",function(req,resp){
+app.post("/inf-profile-save-process",async function(req,resp){
     let email=req.body.email;
     let iname=req.body.iname;
     let dob=req.body.dob;
@@ -148,6 +174,15 @@ app.post("/inf-profile-save-process",function(req,resp){
 
     let path=__dirname+"/public/uploads/"+fileName;
     req.files.ppic.mv(path);
+
+    await cloudinary.uploader.upload(path)
+    .then(function(result){
+
+        fileName=result.url;
+    })
+
+
+    
 
     mysql.query("insert into inprofile values(?,?,?,?,?,?,?,?,?,?,?,?)",[email,iname,dob,gender,address,city,contact,field.toString(),insta,fb,yt,fileName],function(err){
         if(err)
@@ -493,7 +528,7 @@ app.get("/search-infl",function(req,resp){
 
 //================================================================================================================
 
-app.post("/cl-profile-save-process",function(req,resp){
+app.post("/cl-profile-save-process",async function(req,resp){
     let email=req.body.email;
     let cname=req.body.cname;
     let dob=req.body.dob;
@@ -518,6 +553,12 @@ app.post("/cl-profile-save-process",function(req,resp){
     let path=__dirname+"/public/uploads/"+fileName;
     req.files.ppic.mv(path);
 
+    await cloudinary.uploader.upload(path)
+    .then(function(result){
+
+        fileName=result.url;
+    })
+
     mysql.query("insert into clprofile values(?,?,?,?,?,?,?)",[email,cname,dob,gender,city,contact,fileName],function(err){
         if(err)
             resp.send(err.message);
@@ -541,7 +582,7 @@ app.get("/search-client",function(req,resp){
 
 //===========================================================================================================================
 
-app.post("/inf-profile-update-process",function(req,resp){
+app.post("/inf-profile-update-process",async function(req,resp){
     let email=req.body.email;
     let iname=req.body.iname;
     let dob=req.body.dob;
@@ -553,35 +594,77 @@ app.post("/inf-profile-update-process",function(req,resp){
     let insta=req.body.insta;
     let fb=req.body.fb;
     let yt=req.body.yt;
-    let fileName=req.files.ppic.name;
+    let fileName="";
+    let path="";
+    if(req.files!=null)
+    {
+        fileName=req.files.ppic.name;
+        path=__dirname+"/public/uploads/"+fileName;
+        req.files.ppic.mv(path);
+    }
+    else
+    {
+        fileName=req.body.hdn;
+    }
+    
+    
+    await cloudinary.uploader.upload(path)
+    .then(function(result){
 
-    let path=__dirname+"/public/uploads/"+fileName;
-    req.files.ppic.mv(path);
+        fileName=result.url;
+    })
+    
+    
+    
 
     mysql.query("update inprofile set iname=?,dob=?,gender=?,address=?,city=?,contact=?,field=?,insta=?,fb=?,yt=?,ppic=? where email=?",[iname,dob,gender,address,city,contact,field.toString(),insta,fb,yt,fileName,email],function(err){
         if(err)
             resp.send(err.message);
+        else
+        {
+            let p=__dirname+"/public/updated.html";
+            resp.sendFile(p);
+        }
     })
 
 })
 
 //============================================================================================================================================================================================================================================================
 
-app.post("/cl-profile-update-process",function(req,resp){
+app.post("/cl-profile-update-process",async function(req,resp){
     let email=req.body.email;
     let cname=req.body.cname;
     let dob=req.body.dob;
     let gender=req.body.gender;
     let city=req.body.city;
     let contact=req.body.contact;
-    let fileName=req.files.ppic.name;
+    let fileName="";
+    let path="";
+    if(req.files!=null)
+    {
+        fileName=req.files.ppic.name;
+        path=__dirname+"/public/uploads/"+fileName;
+        req.files.ppic.mv(path);
+    }
+    else
+    {
+        fileName=req.body.hdn;
+    }
 
-    let path=__dirname+"/public/uploads/"+fileName;
-    req.files.ppic.mv(path);
+    await cloudinary.uploader.upload(path)
+    .then(function(result){
+
+        fileName=result.url;
+    })
 
     mysql.query("update clprofile set cname=?,dob=?,gender=?,city=?,contact=?,ppic=? where email=?",[cname,dob,gender,city,contact,fileName,email],function(err){
         if(err)
             resp.send(err.message);
+        else
+        {
+            let p=__dirname+"/public/updated.html";
+            resp.sendFile(p);
+        }
     })
 })
 

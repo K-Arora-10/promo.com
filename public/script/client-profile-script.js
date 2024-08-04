@@ -27,7 +27,8 @@ $(document).ready(function(){
                 $("#inputCity").val(jsonAry[0].city);
                 $("#inputContact").val(jsonAry[0].contact);
                 $("#update").prop("disabled",false);
-                $("#prev").prop("src","uploads/"+jsonAry[0].ppic);
+                $("#prev").prop("src",jsonAry[0].ppic);
+                $("#hdn").val(jsonAry[0].ppic);
             }
 
             
