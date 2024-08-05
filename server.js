@@ -180,6 +180,7 @@ app.post("/inf-profile-save-process",async function(req,resp){
 
         fileName=result.url;
     })
+    .catch(function(){})
 
 
     
@@ -215,7 +216,7 @@ app.post("/infl-events",function(req,resp){
     let city=req.body.city;
     let venue=req.body.venue;
 
-    mysql.query("insert into events values(?,?,?,?,?,?)",[email,title,date,time,city,venue],function(err){
+    mysql.query("insert into events values(null,?,?,?,?,?,?)",[email,title,date,time,city,venue],function(err){
         if(err)
             resp.send(err.message);
         else
@@ -513,18 +514,18 @@ app.get("/client-profile",function(req,resp){
 
 //========================================================================================================================================================================
 
-app.get("/search-infl",function(req,resp){
-    let email=req.query.email;
+// app.get("/search-infl",function(req,resp){
+//     let email=req.query.email;
 
-    mysql.query("select * from clprofile where email=?",[email],function(err,resultJsonAry){
-        if(err)
-            console.log(err.message);
-        else
-        {
-            resp.send(resultJsonAry);
-        }
-    })
-})
+//     mysql.query("select * from clprofile where email=?",[email],function(err,resultJsonAry){
+//         if(err)
+//             console.log(err.message);
+//         else
+//         {
+//             resp.send(resultJsonAry);
+//         }
+//     })
+// })
 
 //================================================================================================================
 
@@ -558,6 +559,7 @@ app.post("/cl-profile-save-process",async function(req,resp){
 
         fileName=result.url;
     })
+    .catch(function(){})
 
     mysql.query("insert into clprofile values(?,?,?,?,?,?,?)",[email,cname,dob,gender,city,contact,fileName],function(err){
         if(err)
@@ -601,6 +603,13 @@ app.post("/inf-profile-update-process",async function(req,resp){
         fileName=req.files.ppic.name;
         path=__dirname+"/public/uploads/"+fileName;
         req.files.ppic.mv(path);
+
+        await cloudinary.uploader.upload(path)
+        .then(function(result){
+
+            fileName=result.url;
+        })
+        .catch(function(){})
     }
     else
     {
@@ -608,11 +617,7 @@ app.post("/inf-profile-update-process",async function(req,resp){
     }
     
     
-    await cloudinary.uploader.upload(path)
-    .then(function(result){
-
-        fileName=result.url;
-    })
+    
     
     
     
@@ -645,17 +650,21 @@ app.post("/cl-profile-update-process",async function(req,resp){
         fileName=req.files.ppic.name;
         path=__dirname+"/public/uploads/"+fileName;
         req.files.ppic.mv(path);
+
+        await cloudinary.uploader.upload(path)
+        .then(function(result){
+
+            fileName=result.url;
+        })
+        .catch(function(){})
     }
     else
     {
         fileName=req.body.hdn;
     }
 
-    await cloudinary.uploader.upload(path)
-    .then(function(result){
 
-        fileName=result.url;
-    })
+    
 
     mysql.query("update clprofile set cname=?,dob=?,gender=?,city=?,contact=?,ppic=? where email=?",[cname,dob,gender,city,contact,fileName,email],function(err){
         if(err)

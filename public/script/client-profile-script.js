@@ -17,7 +17,7 @@ $(document).ready(function(){
             if(jsonAry.length==0)
             {
                 $("#save").prop("disabled",false);
-                $("#prev").prop("src","Iamges/user.jpg");
+                $("#prev").prop("src","Images/user.jpg");
             }
             
             else{
@@ -29,6 +29,7 @@ $(document).ready(function(){
                 $("#update").prop("disabled",false);
                 $("#prev").prop("src",jsonAry[0].ppic);
                 $("#hdn").val(jsonAry[0].ppic);
+                // alert($("#hdn").val());
             }
 
             
